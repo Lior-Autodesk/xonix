@@ -16,7 +16,7 @@ const CONFIG = Object.freeze({
   CELL_SIZE: 12,
 
   PLAYER_SPEED: 170,       // pixels per second
-  ENEMY_BASE_SPEED: 0.9,   // pixels per frame (at 60fps)
+  ENEMY_BASE_SPEED: 0.5,   // pixels per frame (at 60fps)
   ENEMY_SPEED_INC: 0.25,   // per level
 
   LIVES_START: 3,
