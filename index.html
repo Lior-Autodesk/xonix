@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>סוגר שטחים</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="game-wrapper">
+    <canvas id="gameCanvas"></canvas>
+    <!-- D-pad for mobile -->
+    <div id="dpad">
+      <button id="btn-up"    class="dpad-btn" data-dir="up">▲</button>
+      <button id="btn-left"  class="dpad-btn" data-dir="left">◀</button>
+      <button id="btn-right" class="dpad-btn" data-dir="right">▶</button>
+      <button id="btn-down"  class="dpad-btn" data-dir="down">▼</button>
+    </div>
+  </div>
+  <div id="keyboard-hint">← ↑ ↓ → מקשי חץ לשליטה</div>
+  <div id="game-instructions" class="hidden">
+    <span>📱 D-pad / ⌨️ חצים לתנועה</span>
+    <span class="hint-sep">·</span>
+    <span>סגור 75% לסיום שלב</span>
+    <span class="hint-sep">·</span>
+    <span>3 חיים · 10 שלבים</span>
+  </div>
+
+  <!-- Overlay screens (HTML elements over canvas) -->
+  <div id="overlay" class="hidden">
+    <!-- Title Screen -->
+    <div id="screen-title" class="screen hidden">
+      <h1 class="retro-title">סוגר שטחים</h1>
+      <p class="subtitle">MADE WITH ❤️ TO XF TLV</p>
+      <button class="btn-primary" id="title-start">התחל משחק</button>
+      <button class="btn-secondary" id="title-scores">טבלת ניקוד</button>
+    </div>
+
+    <!-- Level Complete Screen -->
+    <div id="screen-level-complete" class="screen hidden">
+      <div class="level-badge" id="lc-badge">✅</div>
+      <h2 id="lc-title">שלב 1 הושלם!</h2>
+      <div class="stats-box">
+        <div class="stat-row"><span>שטח נסגר</span><span id="lc-area">0%</span></div>
+        <div class="stat-row"><span>ניקוד בשלב</span><span id="lc-level-score">0</span></div>
+        <div class="stat-row"><span>ניקוד כולל</span><span id="lc-total-score">0</span></div>
+      </div>
+      <p id="lc-next-msg">הכן את עצמך לשלב 2!</p>
+      <button class="btn-primary" id="lc-continue">המשך</button>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="screen-gameover" class="screen hidden">
+      <h2 class="gameover-title">GAME OVER 💀</h2>
+      <div class="stats-box">
+        <div class="stat-row"><span>ניקוד סופי</span><span id="go-score">0</span></div>
+        <div class="stat-row"><span>הגעת לשלב</span><span id="go-level">1</span></div>
+      </div>
+      <div class="name-entry">
+        <label for="go-name">הכנס שם לטבלת ניקוד:</label>
+        <input type="text" id="go-name" maxlength="10" placeholder="שמך" autocomplete="off" autocorrect="off" spellcheck="false">
+      </div>
+      <button class="btn-primary" id="go-save">שמור ניקוד</button>
+      <button class="btn-secondary" id="go-restart">שחק שוב</button>
+    </div>
+
+    <!-- Win Screen -->
+    <div id="screen-win" class="screen hidden">
+      <h2 class="win-title">🏆 ניצחת! 🏆</h2>
+      <p>השלמת את כל 10 השלבים!</p>
+      <div class="stats-box">
+        <div class="stat-row"><span>ניקוד סופי</span><span id="win-score">0</span></div>
+      </div>
+      <div class="name-entry">
+        <label for="win-name">הכנס שם לטבלת ניקוד:</label>
+        <input type="text" id="win-name" maxlength="10" placeholder="שמך" autocomplete="off" autocorrect="off" spellcheck="false">
+      </div>
+      <button class="btn-primary" id="win-save">שמור ניקוד</button>
+    </div>
+
+    <!-- Scores Screen -->
+    <div id="screen-scores" class="screen hidden">
+      <h2 class="scores-title">🏆 טבלת ניקוד</h2>
+      <table id="scores-table">
+        <thead>
+          <tr><th>#</th><th>שם</th><th>ניקוד</th><th>שלב</th><th>תאריך</th></tr>
+        </thead>
+        <tbody id="scores-body"></tbody>
+      </table>
+      <button class="btn-primary" id="scores-start">התחל משחק</button>
+      <button class="btn-secondary" id="scores-back">חזור</button>
+    </div>
+  </div>
+
+  <script src="js/constants.js"></script>
+  <script src="js/grid.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/enemy.js"></script>
+  <script src="js/capture.js"></script>
+  <script src="js/collision.js"></script>
+  <script src="js/scores.js"></script>
+  <script src="js/renderer.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
