@@ -48,7 +48,7 @@ class Game {
   _setupInput() {
     // Keyboard
     window.addEventListener('keydown', (e) => {
-      if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].includes(e.code)) {
+      if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code)) {
         e.preventDefault();
       }
       if (this.state !== STATE.PLAYING) return;
@@ -57,7 +57,7 @@ class Game {
         case 'ArrowDown':  this.player.setDir(0,  1); break;
         case 'ArrowLeft':  this.player.setDir(-1, 0); break;
         case 'ArrowRight': this.player.setDir( 1, 0); break;
-        case 'Space':      this._godMode = !this._godMode; break;
+        case 'KeyZ':       this._godMode = !this._godMode; break; // ז
       }
     });
 

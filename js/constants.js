@@ -20,7 +20,7 @@ const CONFIG = Object.freeze({
   ENEMY_SPEED_INC: 0.25,   // per level
 
   LIVES_START: 3,
-  LEVELS_TOTAL: 10,
+  LEVELS_TOTAL: 5,
   CAPTURE_THRESHOLD: 0.75,
 
   PLAYER_EMOJI: '👨‍🎨',
