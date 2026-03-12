@@ -38,11 +38,16 @@ class UI {
     });
 
     // Game Over
-    document.getElementById('go-save').addEventListener('click', () => {
+    document.getElementById('go-save').addEventListener('click', async () => {
+      const btn   = document.getElementById('go-save');
       const name  = document.getElementById('go-name').value;
       const score = parseInt(this.screens.gameOver.dataset.score || '0', 10);
       const level = parseInt(this.screens.gameOver.dataset.level || '1', 10);
-      saveScore(name, score, level);
+      btn.disabled    = true;
+      btn.textContent = 'שומר...';
+      await saveScore(name, score, level);
+      btn.disabled    = false;
+      btn.textContent = 'שמור ניקוד';
       this.showScores();
     });
     document.getElementById('go-restart').addEventListener('click', () => {
@@ -50,10 +55,15 @@ class UI {
     });
 
     // Win
-    document.getElementById('win-save').addEventListener('click', () => {
+    document.getElementById('win-save').addEventListener('click', async () => {
+      const btn   = document.getElementById('win-save');
       const name  = document.getElementById('win-name').value;
       const score = parseInt(this.screens.win.dataset.score || '0', 10);
-      saveScore(name, score, CONFIG.LEVELS_TOTAL);
+      btn.disabled    = true;
+      btn.textContent = 'שומר...';
+      await saveScore(name, score, CONFIG.LEVELS_TOTAL);
+      btn.disabled    = false;
+      btn.textContent = 'שמור ניקוד';
       this.showScores();
     });
 
@@ -111,7 +121,6 @@ class UI {
     this.screens.gameOver.dataset.score = score;
     this.screens.gameOver.dataset.level = level;
     this._showScreen('gameOver');
-    // Auto-focus name input for mobile keyboard
     setTimeout(() => document.getElementById('go-name').focus(), 300);
   }
 
@@ -124,29 +133,33 @@ class UI {
   }
 
   showScores() {
-    const scores = getScores();
     const tbody  = document.getElementById('scores-body');
     const medals = ['🥇', '🥈', '🥉'];
 
-    tbody.innerHTML = '';
-    if (scores.length === 0) {
-      const tr = document.createElement('tr');
-      tr.innerHTML = '<td colspan="5" style="color:#556677;padding:16px">אין ניקוד עדיין</td>';
-      tbody.appendChild(tr);
-    } else {
-      scores.forEach((s, i) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${medals[i] || (i + 1)}</td>
-          <td>${escapeHtml(s.name)}</td>
-          <td>${s.score.toLocaleString()}</td>
-          <td>${s.level}</td>
-          <td>${s.date}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
+    // Show loading immediately, then fill in
     this._showScreen('scores');
+    tbody.innerHTML = '<tr><td colspan="5" style="color:#8b949e;padding:16px">טוען...</td></tr>';
+
+    getScores().then(scores => {
+      tbody.innerHTML = '';
+      if (scores.length === 0) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td colspan="5" style="color:#556677;padding:16px">אין ניקוד עדיין</td>';
+        tbody.appendChild(tr);
+      } else {
+        scores.forEach((s, i) => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${medals[i] || (i + 1)}</td>
+            <td>${escapeHtml(s.name)}</td>
+            <td>${s.score.toLocaleString()}</td>
+            <td>${s.level}</td>
+            <td>${s.date}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+    });
   }
 }
 
