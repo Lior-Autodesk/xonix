@@ -95,7 +95,7 @@ class Renderer {
 
   // ── HUD bar at top ────────────────────────────────────────────────────────
   // Layout: שלב | אחוזים | ניקוד | לבבות
-  drawHUD(lives, score, level, pct) {
+  drawHUD(lives, score, level, pct, godMode) {
     const ctx  = this.ctx;
     const w    = this._logW;
     const midY = HUD_H / 2;
@@ -137,6 +137,18 @@ class Renderer {
     // ── Col 4: שלב ──
     ctx.fillStyle = '#8b949e';
     ctx.fillText(`שלב ${level}`, col * 3.5, midY);
+
+    // ── God Mode indicator ──
+    if (godMode) {
+      const pulse = 0.6 + 0.4 * Math.abs(Math.sin(Date.now() / 400));
+      ctx.save();
+      ctx.globalAlpha = pulse;
+      ctx.font        = "bold 13px 'Open Sans', system-ui, sans-serif";
+      ctx.fillStyle   = '#f0e040';
+      ctx.textAlign   = 'right';
+      ctx.fillText('⚡ GOD MODE', w - 6, midY);
+      ctx.restore();
+    }
   }
 
   // ── Game grid (offset by GRID_Y) ──────────────────────────────────────────

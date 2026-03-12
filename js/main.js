@@ -219,7 +219,7 @@ class Game {
     this.renderer.drawGrid(this.grid);
     for (const e of this.enemies) this.renderer.drawEnemy(e);
     this.renderer.drawPlayer(this.player);
-    this.renderer.drawHUD(this.lives, this.score, this.level, this.grid.capturePercent());
+    this.renderer.drawHUD(this.lives, this.score, this.level, this.grid.capturePercent(), this._godMode);
   }
 }
 
