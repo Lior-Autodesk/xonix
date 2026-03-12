@@ -153,7 +153,7 @@ class UI {
             <td>${medals[i] || (i + 1)}</td>
             <td>${escapeHtml(s.name)}</td>
             <td>${s.score.toLocaleString()}</td>
-            <td>${s.level}</td>
+            <td>שלב ${s.level}</td>
             <td>${s.date}</td>
           `;
           tbody.appendChild(tr);
